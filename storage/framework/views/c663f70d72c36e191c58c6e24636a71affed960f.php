@@ -30,7 +30,9 @@
                 <div class="row p-3">
                     <div class="col-md-2">
                         <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="modal" hidden data-original-title="test" data-bs-target="#exampleModal">Add New</button>
+                        
                     </div>
+
                     <div class="col-md-10">
 
                         <div class="row">
@@ -66,6 +68,7 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
                                 <?php
                                 $i = $models->firstItem();

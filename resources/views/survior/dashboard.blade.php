@@ -12,10 +12,13 @@
   .data_kecamatan {
     width: 100%;
     height: 400px;
-  }
-</style>
-@endpush
 
+  }
+  
+</style>
+
+
+@endpush
 @section('content')
 @yield('breadcrumb-list')
 <!-- Container-fluid starts-->
@@ -29,6 +32,7 @@
           </div>
           <h5 id="anak_yatim"></h5>
           <p>Anak Yatim</p><a class="btn-arrow arrow-primary" href="javascript:void(0)" id="jumlah_yatim"></a>
+
         </div>
       </div>
     </div>
@@ -40,7 +44,9 @@
           </div>
           <h5 id="anak_piatu"></h5>
           <p>Anak Piatu</p><a class="btn-arrow arrow-primary" href="javascript:void(0)" id="jumlah_piatu"></a>
-          <div class="parrten"></div>
+          <div class="parrten">
+
+          </div>
         </div>
       </div>
     </div>
@@ -52,7 +58,9 @@
           </div>
           <h5 id="yatim_piatu"></h5>
           <p>Anak Yatim Piatu</p><a class="btn-arrow arrow-primary" href="javascript:void(0)" id="jumlah_yatim_piatu"> </a>
-          <div class="parrten"></div>
+          <div class="parrten">
+
+          </div>
         </div>
       </div>
     </div>
@@ -64,7 +72,9 @@
           </div>
           <h5 id="semua"></h5>
           <p>Semua</p><a class="btn-arrow arrow-primary" href="javascript:void(0)"><i class="toprightarrow-primary fa fa-arrow-up me-2"></i>100% </a>
-          <div class="parrten"></div>
+          <div class="parrten">
+
+          </div>
         </div>
       </div>
     </div>
@@ -91,32 +101,40 @@
           </div>
         </div>
         <div class="card-body">
-          <div id="jenis_kelamin"></div>
+          <div class="jenis_kelamin">
+          </div>
         </div>
       </div>
     </div>
     <div class="col-md-6">
       <div class="card">
-        <div class="card-header">
-          <div class="header-top d-sm-flex justify-content-between align-items-center">
-            <h5>Pendidikan</h5>
+          <div class="card-header">
+              <div class="header-top d-sm-flex justify-content-between align-items-center">
+                  <h5>Pendidikan</h5>
+              </div>
           </div>
-        </div>
-        <div class="card-body">
-          <div id="pendidikan"></div>
-        </div>
+          <div class="card-body">
+              <div id="pendidikan" 
+              style="width: 100% ;height: 400px;">
+            </div>
+          </div>
       </div>
-    </div>
   </div>
+  
+
+  </div>
+  {{-- @include('maps/map') --}}
 </div>
 <!-- Container-fluid Ends-->
-
 @push('scripts')
 <script src="{{asset('assets/js/chart/chartist/chartist.js')}}"></script>
 <script src="{{asset('assets/js/chart/chartist/chartist-plugin-tooltip.js')}}"></script>
+
+
 <script src="{{asset('assets/js/chart/amchart/core.js')}}"></script>
 <script src="{{asset('assets/js/chart/amchart/charts.js')}}"></script>
 <script src="{{asset('assets/js/chart/amchart/animated.js')}}"></script>
+
 
 <script>
   $(document).ready(function() {
@@ -125,94 +143,208 @@
       type: 'GET',
       dataType: 'json',
       success: function(data) {
+        // status anak
         const id_pendata = `{{Session::get('id_survior')}}`
+        // console.log(id_pendata)
         const pendata = data['anak'].filter((id_survior) => id_survior.id_survior == id_pendata);
+        // console.log(pendata)
         const anak_yatim = pendata.filter((status_anak) => status_anak.status_anak == 1);
         const anak_piatu = pendata.filter((status_anak) => status_anak.status_anak == 2);
         const yatim_piatu = pendata.filter((status_anak) => status_anak.status_anak == 3);
 
-        const jumlah_yatim = anak_yatim.length / pendata.length * 100;
-        const jumlah_piatu = anak_piatu.length / pendata.length * 100;
-        const jumlah_yatim_piatu = yatim_piatu.length / pendata.length * 100;
-
+        const jumlah_yatim = anak_yatim.length;
+        const jumlah_piatu = anak_piatu.length;
+        const jumlah_yatim_piatu = yatim_piatu.length;
+        // jenis kelamin
         const laki_laki = pendata.filter((jenis_kelamin) => jenis_kelamin.jenis_kelamin == 1);
         const perempuan = pendata.filter((jenis_kelamin) => jenis_kelamin.jenis_kelamin == 0);
-        const jumlah_lk = laki_laki.length / pendata.length * 100;
-        const jumlah_pr = perempuan.length / pendata.length * 100;
+        const jumlah_lk = laki_laki.length;
+        const jumlah_pr = perempuan.length;
 
-        const jenis_pendidikan = ['paud tk', 'belum sekolah', 'sd/mi sederajat', 'belum tamat sd/mi sederajat', 'tamat sd/mi sederajat', 'sltp sederajat', 'tamat sltp sederajat', 'slta sederajat', 'tamat slta'];
+        // pendidikan
+        const paud_tk = pendata.filter((id_pendidikan)=>id_pendidikan.id_pendidikan ==1);
+        const belum_sekolah = pendata.filter((id_pendidikan)=>id_pendidikan.id_pendidikan ==2);
+        const sdmi_sederajat = pendata.filter((id_pendidikan)=>id_pendidikan.id_pendidikan ==3);
+        const belum_tamat_sdmi_sederajat = pendata.filter((id_pendidikan)=>id_pendidikan.id_pendidikan ==4);
+        const tamat_sdmi_sederajat = pendata.filter((id_pendidikan)=>id_pendidikan.id_pendidikan ==5);
+        const sltp_sederajat = pendata.filter((id_pendidikan)=>id_pendidikan.id_pendidikan ==6);
+        const tamat_sltp_sederajat = pendata.filter((id_pendidikan)=>id_pendidikan.id_pendidikan ==7);
+        const slta_sederajat = pendata.filter((id_pendidikan)=>id_pendidikan.id_pendidikan ==8);
+        const tamat_slta = pendata.filter((id_pendidikan)=>id_pendidikan.id_pendidikan ==9);
 
-        const jumlah_pendidikan = jenis_pendidikan.map(jenis => {
-            return {
-                pendidikan: jenis,
-                jumlah: pendata.filter(anak => anak.id_pendidikan === jenis_pendidikan.indexOf(jenis) + 1).length
-            };
-        });
+        const jumlah_paud_tk = paud_tk.length; // Menghitung jumlah anak dengan pendidikan PAUD/TK
+        const jumlah_belum_sekolah = belum_sekolah.length; // Menghitung jumlah anak yang belum sekolah
+        const jumlah_sdmi_sederajat = sdmi_sederajat.length; // Menghitung jumlah anak dengan pendidikan SD/MI
+        const jumlah_belum_tamat_sdmi_sederajat = belum_tamat_sdmi_sederajat.length; // Menghitung jumlah anak yang belum tamat SD/MI
+        const jumlah_tamat_sdmi_sederajat = tamat_sdmi_sederajat.length; // Menghitung jumlah anak yang tamat SD/MI
+        const jumlah_sltp_sederajat = sltp_sederajat.length; // Menghitung jumlah anak dengan pendidikan SLTP
+        const jumlah_tamat_sltp_sederajat = tamat_sltp_sederajat.length; // Menghitung jumlah anak yang tamat SLTP
+        const jumlah_slta_sederajat = slta_sederajat.length; // Menghitung jumlah anak dengan pendidikan SLTA
+        const jumlah_tamat_slta = tamat_slta.length; // Menghitung jumlah anak yang tamat SLTA
 
-        $("#anak_yatim").append(anak_yatim.length + " Orang");
-        $("#anak_piatu").append(anak_piatu.length + " Orang");
-        $("#yatim_piatu").append(yatim_piatu.length + " Orang");
-        $("#semua").append(pendata.length + " Orang");
-        $("#jumlah_yatim").append(jumlah_yatim.toFixed(2) + " %");
-        $("#jumlah_piatu").append(jumlah_piatu.toFixed(2) + " %");
-        $("#jumlah_yatim_piatu").append(jumlah_yatim_piatu.toFixed(2) + " %");
 
+        // const kecamtan = data.filter((kecamtan) => kecamtan.id_kecamatan == id_kecamatan);
+        $("#anak_yatim").append(anak_yatim.length + " Orang")
+        $("#anak_piatu").append(anak_piatu.length + " Orang")
+        $("#yatim_piatu").append(yatim_piatu.length + " Orang")
+        $("#semua").append(pendata.length + " Orang")
+        $("#jumlah_yatim").append(jumlah_yatim.toFixed(2) + " %")
+        $("#jumlah_piatu").append(jumlah_piatu.toFixed(2) + " %")
+        $("#jumlah_yatim_piatu").append(jumlah_yatim_piatu.toFixed(2) + " %")
+        // console.log(jumlah_yatim);
+        // console.log(jumlah_piatu);
+        // console.log(jumlah_yatim_piatu);
+
+        // Themes begin
         am4core.useTheme(am4themes_animated);
+        // Themes end
 
-        // Grafik status Anak
+        // grafik status Anak
+        // Create chart instance
         var chart = am4core.create("status_anak", am4charts.PieChart);
+
+        // Add data
         chart.data = [{
-          "status_anak": "Anak Yatim",
-          "percentage": jumlah_yatim
+          "country": "Yatim",
+          "litres": jumlah_yatim
         }, {
-          "status_anak": "Anak Piatu",
-          "percentage": jumlah_piatu
+          "country": "Piatu",
+          "litres": jumlah_piatu
         }, {
-          "status_anak": "Anak Yatim Piatu",
-          "percentage": jumlah_yatim_piatu
+          "country": "Yatim Piatu",
+          "litres": jumlah_yatim_piatu
         }];
+
+        // Add and configure Series
         var pieSeries = chart.series.push(new am4charts.PieSeries());
-        pieSeries.dataFields.value = "percentage";
-        pieSeries.dataFields.category = "status_anak";
+        pieSeries.dataFields.value = "litres";
+        pieSeries.dataFields.category = "country";
         pieSeries.innerRadius = am4core.percent(50);
         pieSeries.ticks.template.disabled = true;
         pieSeries.labels.template.disabled = true;
+
+        var rgm = new am4core.LinearGradientModifier();
+        rgm.brightnesses.push(0, -0.4);
+        pieSeries.slices.template.fillModifier = rgm;
+
+        var rgm2 = new am4core.LinearGradientModifier();
+        rgm2.brightnesses.push(0, -0.4);
+
+        pieSeries.slices.template.strokeModifier = rgm2;
+        pieSeries.slices.template.strokeOpacity = 1;
+        pieSeries.slices.template.strokeWidth = 1;
+
+
         chart.legend = new am4charts.Legend();
         chart.legend.position = "right";
 
-        // Grafik jenis kelamin
-        var chartJenisKelamin = am4core.create("jenis_kelamin", am4charts.PieChart);
-        chartJenisKelamin.data = [{
-          "jenis_kelamin": "Laki Laki",
-          "percentage": jumlah_lk
-        }, {
-          "jenis_kelamin": "Perempuan",
-          "percentage": jumlah_pr
-        }];
-        var pieSeriesJenisKelamin = chartJenisKelamin.series.push(new am4charts.PieSeries());
-        pieSeriesJenisKelamin.dataFields.value = "percentage";
-        pieSeriesJenisKelamin.dataFields.category = "jenis_kelamin";
-        pieSeriesJenisKelamin.innerRadius = am4core.percent(50);
-        pieSeriesJenisKelamin.ticks.template.disabled = true;
-        pieSeriesJenisKelamin.labels.template.disabled = true;
-        chartJenisKelamin.legend = new am4charts.Legend();
-        chartJenisKelamin.legend.position = "right";
+        pieSeries.slices.template.events.on("validated", function(event) {
+          var gradient = event.target.fillModifier.gradient
+          gradient.rotation = event.target.middleAngle + 90;
 
-        // Grafik pendidikan
-        var chartPendidikan = am4core.create("pendidikan", am4charts.PieChart);
-        chartPendidikan.data = jumlah_pendidikan;
-        var pieSeriesPendidikan = chartPendidikan.series.push(new am4charts.PieSeries());
-        pieSeriesPendidikan.dataFields.value = "jumlah";
-        pieSeriesPendidikan.dataFields.category = "pendidikan";
-        pieSeriesPendidikan.innerRadius = am4core.percent(50);
-        pieSeriesPendidikan.ticks.template.disabled = true;
-        pieSeriesPendidikan.labels.template.text = "{category}: {value}";
-        chartPendidikan.legend = new am4charts.Legend();
-        chartPendidikan.legend.position = "right";
+          var gradient2 = event.target.strokeModifier.gradient
+          gradient2.rotation = event.target.middleAngle + 90;
+        })
+
+
+        // grafik jenis_kelamin
+
+        // grafik jenis_kelamin
+var chartJenisKelamin = am4core.create("jenis_kelamin", am4charts.PieChart);
+
+// Add data
+chartJenisKelamin.data = [{
+  "jenis_kelamin": "Laki Laki",
+  "jumlah": jumlah_lk
+}, {
+  "jenis_kelamin": "Perempuan",
+  "jumlah": jumlah_pr
+}];
+
+// Add and configure Series
+var pieSeriesJenisKelamin = chartJenisKelamin.series.push(new am4charts.PieSeries());
+pieSeriesJenisKelamin.dataFields.value = "jumlah";
+pieSeriesJenisKelamin.dataFields.category = "jenis_kelamin";
+pieSeriesJenisKelamin.innerRadius = am4core.percent(50);
+pieSeriesJenisKelamin.ticks.template.disabled = true;
+pieSeriesJenisKelamin.labels.template.disabled = true;
+
+var rgmJenisKelamin = new am4core.LinearGradientModifier();
+rgmJenisKelamin.brightnesses.push(0, -0.4);
+pieSeriesJenisKelamin.slices.template.fillModifier = rgmJenisKelamin;
+
+var rgm2JenisKelamin = new am4core.LinearGradientModifier();
+rgm2JenisKelamin.brightnesses.push(0, -0.4);
+
+pieSeriesJenisKelamin.slices.template.strokeModifier = rgm2JenisKelamin;
+pieSeriesJenisKelamin.slices.template.strokeOpacity = 1;
+pieSeriesJenisKelamin.slices.template.strokeWidth = 1;
+
+chartJenisKelamin.legend = new am4charts.Legend();
+chartJenisKelamin.legend.position = "right";
+
+pieSeriesJenisKelamin.slices.template.events.on("validated", function(event) {
+  var gradient = event.target.fillModifier.gradient
+  gradient.rotation = event.target.middleAngle + 90;
+
+  var gradient2 = event.target.strokeModifier.gradient
+  gradient2.rotation = event.target.middleAngle + 90;
+});
+
+// grafik pendidikan
+var chartPendidikan = am4core.create("pendidikan", am4charts.PieChart);
+
+// Add data
+// Add data
+chartPendidikan.data = [
+    { "pendidikan": "paud tk", "jumlah": jumlah_paud_tk },
+    { "pendidikan": "belum sekolah", "jumlah": jumlah_belum_sekolah },
+    { "pendidikan": "sd/mi sederajat", "jumlah": jumlah_sdmi_sederajat },
+    { "pendidikan": "belum tamat sd/mi sederajat", "jumlah": jumlah_belum_tamat_sdmi_sederajat },
+    { "pendidikan": "tamat sd/mi sederajat", "jumlah": jumlah_tamat_sdmi_sederajat },
+    { "pendidikan": "sltp sederajat", "jumlah": jumlah_sltp_sederajat },
+    { "pendidikan": "tamat sltp sederajat", "jumlah": jumlah_tamat_sltp_sederajat },
+    { "pendidikan": "slta sederajat", "jumlah": jumlah_slta_sederajat },
+    { "pendidikan": "tamat slta", "jumlah": jumlah_tamat_slta }
+];
+
+
+// Add and configure Series
+var pieSeriesPendidikan = chartPendidikan.series.push(new am4charts.PieSeries());
+pieSeriesPendidikan.dataFields.value = "jumlah";
+pieSeriesPendidikan.dataFields.category = "pendidikan";
+pieSeriesPendidikan.innerRadius = am4core.percent(50);
+pieSeriesPendidikan.ticks.template.disabled = true;
+pieSeriesPendidikan.labels.template.disabled = true;
+
+var rgmPendidikan = new am4core.LinearGradientModifier();
+rgmPendidikan.brightnesses.push(0, -0.4);
+pieSeriesPendidikan.slices.template.fillModifier = rgmPendidikan;
+
+var rgm2Pendidikan = new am4core.LinearGradientModifier();
+rgm2Pendidikan.brightnesses.push(0, -0.4);
+
+pieSeriesPendidikan.slices.template.strokeModifier = rgm2Pendidikan;
+pieSeriesPendidikan.slices.template.strokeOpacity = 1;
+pieSeriesPendidikan.slices.template.strokeWidth = 1;
+
+chartPendidikan.legend = new am4charts.Legend();
+chartPendidikan.legend.position = "right";
+
+pieSeriesPendidikan.slices.template.events.on("validated", function(event) {
+    var gradient = event.target.fillModifier.gradient
+    gradient.rotation = event.target.middleAngle + 90;
+
+    var gradient2 = event.target.strokeModifier.gradient
+    gradient2.rotation = event.target.middleAngle + 90;
+});
+
+
       }
     });
-  });
-</script>
-@endpush
 
+  })
+</script>
+
+@endpush
 @endsection
