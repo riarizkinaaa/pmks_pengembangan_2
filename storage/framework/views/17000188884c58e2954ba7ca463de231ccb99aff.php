@@ -1,21 +1,36 @@
 <header class="main-nav">
-
     <div class="sidebar-user text-center">
         <a href="user-profile.html">
-            <p class="mb-0 font-roboto">selamat datang<?php echo e(Session::get('nama_kecamatan')); ?></p>
-            <h6 class="mt-3 f-14 f-w-600 text-uppercase"><?php echo e(Auth::user()->username); ?></h6>
+            <p class="mb-0 font-roboto">Selamat datang, <?php echo e(Auth::user()->username); ?></p>
+            <h6 class="mt-3 f-14 f-w-600 text-uppercase">
+                <?php
+                    // Dapatkan id_kecamatan dari sesi
+                    $id_kecamatan = Session::get('id_kecamatan');
+                    // Ambil data kecamatan berdasarkan id_kecamatan
+                    $kecamatan = App\Models\Kecamatan::find($id_kecamatan);
+                    // Jika data kecamatan ditemukan, tampilkan namanya
+                    if ($kecamatan) {
+                        echo $kecamatan->nama_kecamatan;
+                    } else {
+                        echo 'Kecamatan tidak ditemukan';
+                    }
+                ?>
+            </h6>
         </a>
-        <?php if(Auth::user()->id_role ==1): ?>
-        <p class="mb-0 font-roboto">Superadmin</p>
-        <?php elseif(Auth::User()->id_role ==2): ?>
-        <p class="mb-0 font-roboto">Pimpinan</p>
-        <?php elseif(Auth::User()->id_role ==3): ?>
-        <p class="mb-0 font-roboto">Verifikator</p>
-        <?php elseif(Auth::User()->id_role ==4): ?>
-        <p class="mb-0 font-roboto">Pendata</p>
-        <?php endif; ?>
-        
-       
+        <?php
+            $id_role = Auth::user()->id_role;
+        ?>
+        <p class="mb-0 font-roboto">
+            <?php if($id_role == 1): ?>
+                Superadmin
+            <?php elseif($id_role == 2): ?>
+                Pimpinan
+            <?php elseif($id_role == 3): ?>
+                Verifikator
+            <?php elseif($id_role == 4): ?>
+                Pendata
+            <?php endif; ?>
+        </p>
     </div>
     <nav class="mt-3">
         <div class="main-navbar">
@@ -28,11 +43,6 @@
                     <li class="dropdown">
                         <a class="nav-link link-nav menu-title <?php echo e(routeActive('dashboard_survior')); ?>" href="<?php echo e(route('dashboard_survior')); ?>"><i data-feather="home"></i><span>Dashboard</span></a>
                     </li>
-                    <!-- <li class="sidebar-main-title">
-                        <div>
-                            <h6>Anak</h6>
-                        </div>
-                    </li> -->
                     <li class="dropdown">
                         <a class="nav-link link-nav menu-title <?php echo e(routeActive('anak_pendata.index')); ?>" href="<?php echo e(route('anak_pendata.index')); ?>"><i data-feather="user"></i><span>Data Anak</span></a>
                     </li>
@@ -47,4 +57,5 @@
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
         </div>
     </nav>
-</header><?php /**PATH C:\Users\ASUS\Music\skripsi\pmks-anak-yatim\resources\views/layouts/survior/partials/sidebar.blade.php ENDPATH**/ ?>
+</header>
+<?php /**PATH C:\Users\ASUS\Music\skripsi\pmks-anak-yatim\resources\views/layouts/survior/partials/sidebar.blade.php ENDPATH**/ ?>

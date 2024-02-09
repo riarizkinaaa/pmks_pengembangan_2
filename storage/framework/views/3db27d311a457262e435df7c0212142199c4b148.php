@@ -172,15 +172,35 @@
         const slta_sederajat = pendata.filter((id_pendidikan)=>id_pendidikan.id_pendidikan ==8);
         const tamat_slta = pendata.filter((id_pendidikan)=>id_pendidikan.id_pendidikan ==9);
 
-        const jumlah_paud_tk = paud_tk.length; // Menghitung jumlah anak dengan pendidikan PAUD/TK
-        const jumlah_belum_sekolah = belum_sekolah.length; // Menghitung jumlah anak yang belum sekolah
-        const jumlah_sdmi_sederajat = sdmi_sederajat.length; // Menghitung jumlah anak dengan pendidikan SD/MI
-        const jumlah_belum_tamat_sdmi_sederajat = belum_tamat_sdmi_sederajat.length; // Menghitung jumlah anak yang belum tamat SD/MI
-        const jumlah_tamat_sdmi_sederajat = tamat_sdmi_sederajat.length; // Menghitung jumlah anak yang tamat SD/MI
-        const jumlah_sltp_sederajat = sltp_sederajat.length; // Menghitung jumlah anak dengan pendidikan SLTP
-        const jumlah_tamat_sltp_sederajat = tamat_sltp_sederajat.length; // Menghitung jumlah anak yang tamat SLTP
-        const jumlah_slta_sederajat = slta_sederajat.length; // Menghitung jumlah anak dengan pendidikan SLTA
-        const jumlah_tamat_slta = tamat_slta.length; // Menghitung jumlah anak yang tamat SLTA
+        const jumlah_paud_tk = paud_tk.length; 
+        const jumlah_belum_sekolah = belum_sekolah.length;
+        const jumlah_sdmi_sederajat = sdmi_sederajat.length; 
+        const jumlah_belum_tamat_sdmi_sederajat = belum_tamat_sdmi_sederajat.length; 
+        const jumlah_tamat_sdmi_sederajat = tamat_sdmi_sederajat.length; 
+        const jumlah_sltp_sederajat = sltp_sederajat.length;
+        const jumlah_tamat_sltp_sederajat = tamat_sltp_sederajat.length; 
+        const jumlah_slta_sederajat = slta_sederajat.length;
+        const jumlah_tamat_slta = tamat_slta.length; 
+
+        $("#paud_tk").append(paud_tk.length + " Orang")
+        $("#belum_sekolah").append(belum_sekolah.length + " Orang")
+        $("#sdmi_sederajat").append(sdmi_sederajat.length + " Orang")
+        $("#belum_tamat_sdmi_sederajat").append(belum_tamat_sdmi_sederajat.length + " Orang")
+        $("#tamat_sdmi_sederajat").append(tamat_sdmi_sederajat.length + " Orang")
+        $("#sltp_sederajat").append(sltp_sederajat.length + " Orang")
+        $("#tamat_sltp_sederajat").append(tamat_sltp_sederajat.length + " Orang")
+        $("#slta_sederajat").append(slta_sederajat.length + " Orang")
+        $("#tamat_slta").append(tamat_slta.length + " Orang")
+        // $("#semua").append(pendata.length + " Orang")
+        // $("#jumlah_paud_tk").append(jumlah_paud_tk.toFixed(2) + " %")
+        // $("#jumlah_belum_sekolah").append(jumlah_belum_sekolah.toFixed(2) + " %")
+        // $("#jumlah_sdmi_sederajat").append(jumlah_sdmi_sederajat.toFixed(2) + " %")
+        // $("#jumlah_belum_tamat_sdmi_sederajat").append(jumlah_belum_tamat_sdmi_sederajat.toFixed(2) + " %")
+        // $("#jumlah_tamat_sdmi_sederajat").append(jumlah_tamat_sdmi_sederajat.toFixed(2) + " %")
+        // $("#_jumlah_sltp_sederajat").append(_jumlah_sltp_sederajat.toFixed(2) + " %")
+        // $("#jumlah_tamat_sltp_sederajat").append(jumlah_tamat_sltp_sederajat.toFixed(2) + " %")
+        // $("#tamat_slta_sederajat").append(tamat_slta_sederajat.toFixed(2) + " %")
+        // $("#jumlah_tamat_slta").append(jumlah_tamat_slta.toFixed(2) + " %")
 
 
         // const kecamtan = data.filter((kecamtan) => kecamtan.id_kecamatan == id_kecamatan);
