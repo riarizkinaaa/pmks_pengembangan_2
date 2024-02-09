@@ -131,6 +131,17 @@
         </div>
       </div>
     </div>
+    <div class="row">
+  <div class="col-md-12">
+    <label for="tahun">Pilih Tahun:</label>
+    <select id="tahun" class="form-select">
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+      <option value="2024">2024</option>
+      <!-- Tambahkan opsi tahun lainnya jika diperlukan -->
+    </select>
+  </div>
+</div>
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
