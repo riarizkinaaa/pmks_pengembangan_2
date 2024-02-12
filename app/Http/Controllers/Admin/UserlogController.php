@@ -46,7 +46,7 @@ class UserlogController extends Controller
 
         $cek_username = Model::where('username', '=', $request->username)->get()->first();
         if (!$cek_username) {
-            if ($request->role == 3 || $request->role == 4 || $request->role == 6) {
+            if ($request->role == 3 || $request->role == 4 || $request->role == 5) {
                 $userlog = Model::create([
                     'username' => $request->username,
                     'password' => Hash::make($request->password),

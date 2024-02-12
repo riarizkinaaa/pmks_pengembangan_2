@@ -41,7 +41,7 @@ class KoordinatorController extends Controller
         // dd($cek_email);
         if ($cek_email) {
             return redirect()
-                ->route('verifikator.data_verifikator.create')
+                ->route('data_koordinator.create')
                 ->withInput()
                 ->with([
                     'error' => 'Email already in use, please try again'
@@ -61,7 +61,7 @@ class KoordinatorController extends Controller
             ]);
             if (!$userlog) {
                 return redirect()
-                    ->route('verifikator.data_verifikator.create')
+                    ->route('data_koordinator.create')
                     ->withInput()
                     ->with([
                         'error' => 'Some problem occurred, please try again'
@@ -69,7 +69,7 @@ class KoordinatorController extends Controller
             }
         } else {
             return redirect()
-                ->route('verifikator.data_verifikator.create')
+                ->route('data_koordinator.create')
                 ->withInput()
                 ->with([
                     'error' => 'Username already in use, please try again'
@@ -79,7 +79,7 @@ class KoordinatorController extends Controller
 
 
         // menginput data Ke Tabel Koordinator
-        $verifikator = Model::create([
+        $koordinator = Model::create([
             'id_user' => $request->id_userlog,
             'nama' => $request->nama,
             'nik' => $request->nik,
@@ -88,15 +88,15 @@ class KoordinatorController extends Controller
             'no_hp' => $request->no_hp,
             'id_kecamatan' => $request->kecamatan,
         ]);
-        if ($verifikator) {
+        if ($koordinator) {
             return redirect()
-                ->route('index')
+                ->route('data_koordinator.index')
                 ->with([
-                    'success' => 'New Verifikator has been created successfully, Please Login Again!'
+                    'success' => 'New Koordinator has been created successfully, Please Login Again!'
                 ]);
         } else {
             return redirect()
-                ->route('index')
+                ->route('data_koordinator.index')
                 ->withInput()
                 ->with([
                     'error' => 'Some problem occurred, please try again'

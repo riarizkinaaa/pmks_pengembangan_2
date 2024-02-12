@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\DusunController;
 use App\Http\Controllers\SurviorController;
 use App\Http\Controllers\VerifikatorController;
 use App\Http\Controllers\PimpinanController;
+use App\Http\Controllers\Koordinator\KoordinatorController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,8 +58,8 @@ Route::prefix('survior')->middleware('auth', 'cek_login:4')->group(function () {
 // Akhir Route Hak Akses Survior
 
 // Awal Route Hak Akses Koordinator
-Route::prefix('koordinator')->middleware('auth', 'cek_login:6')->group(function () {
-	Route::resource('data_koordinator', \App\Http\Controllers\Koordinator\KoordinatorController::class);
+Route::prefix('koordinator')->middleware('auth', 'cek_login:5')->group(function () {
+	Route::resource('data_koordinator', KoordinatorController::class)->names('data_koordinator');
 	Route::resource('anak_koordinator', \App\Http\Controllers\Koordinator\AnakController::class);
 	// data json
 	Route::get('json_all_anak_koor', [\App\Http\Controllers\Admin\AnakController::class, 'all_anak']);

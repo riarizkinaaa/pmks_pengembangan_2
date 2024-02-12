@@ -39,6 +39,14 @@ class AuthController extends Controller
                 } else {
                     return view('auth.login');
                 }
+            } elseif ($user->id_role == 5) {
+                if ($user->aktif == 1) {
+                    return redirect('/koordinator/data_koordinator');
+                } elseif ($user->aktif == 0) {
+                    return redirect('/koordinator/data_koordinator/create');
+                } else {
+                    return view('auth.login');
+                }
             }
         }
         return view('auth.login');
@@ -100,14 +108,14 @@ class AuthController extends Controller
                             'error' => 'Your Account is Not Aktive Permanent ! '
                         ]);
                 }
-            } elseif ($user->id_role == 6) {
+            } elseif ($user->id_role == 5) {
                 if ($user->aktif == 1) {
                     $data_user = Koordinator::where('id_user', '=', $user->id)->get()->first();
-                    // dd($user->id_role);
+                    // dd($data_user);
                     $request->session()->put('id_koordinator', $data_user->id_koordinator);
                     $request->session()->put('id_kecamatan', $data_user->id_kecamatan);
                     $request->session()->put('id_desa', $data_user->id_desa);
-                    return redirect('/koordinator/data_koordinator');
+                    return redirect('/koordinator/data_koordinator/index');
                 } elseif ($user->aktif == 0) {
                     // echo "oke";
                     return redirect('/koordinator/data_koordinator/create');
