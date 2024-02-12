@@ -448,24 +448,34 @@
 
 
         // data kecamatan
-        var chart = am4core.create("data_kecamatan", am4charts.XYChart);
-        chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-        // var objek = {}
-        var datakec = []
-        var data_max = []
-        for (let i = 0; i < data['kecamatan'].length; i++) {
-          const kecamatan = data['anak'].filter((kecamatan) => kecamatan.id_kecamatan == data['kecamatan'][i]['id_kecamatan']);
-          let kec = {
-            kecamatan: data['kecamatan'][i]['nama_kecamatan'],
-            jumlah_anak: kecamatan.length
+          var tahunYangDipilih = 2023; // Ganti dengan tahun yang sesuai
+          var batasUsia = 19;
+
+
+          var chart = am4core.create("data_kecamatan", am4charts.XYChart);
+          chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+          // var objek = {}
+          var datakec = []
+          var data_max = []
+          var dataAnakFiltered = data['anak'].filter(anak => {
+            const tahunLahir = new Date(anak.tgl_lahir).getFullYear();
+            const usia = tahunYangDipilih - tahunLahir;
+            return usia < batasUsia;
+          });
+
+          for (let i = 0; i < data['kecamatan'].length; i++) {
+            const kecamatan = dataAnakFiltered.filter(anak => anak.id_kecamatan == data['kecamatan'][i]['id_kecamatan']);
+            let kec = {
+              kecamatan: data['kecamatan'][i]['nama_kecamatan'],
+              jumlah_anak: kecamatan.length
+            };
+            datakec.push(kec);
+            data_max.push(kecamatan.length);
           }
-          datakec.push(kec)
-          data_max.push(kecamatan.length)
-        }
-        // console.log(datakec)
-        // console.log(data_max)
-        chart.data = datakec
-        var max = Math.max.apply(null, data_max);
+          // console.log(datakec)
+          // console.log(data_max)
+          chart.data = datakec
+          var max = Math.max.apply(null, data_max);
 
         var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
         categoryAxis.renderer.grid.template.location = 0;
